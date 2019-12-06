@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leaflet 点聚合</title>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+      integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
+      integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
+      crossorigin=""
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="screen.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+    />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
+    <script
+      type="text/javascript"
+      src="./leaflet.ChineseTmsProviders.js"
+    ></script>
+    <script src="./realworld.388.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      html,
+      body,
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <span
+      >Mouse over a cluster to see the bounds of its children and click a
+      cluster to zoom to those bounds</span
+    >
+    <script type="text/javascript">
+      // var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+      //     maxZoom: 18,
+      //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+      //         '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      //         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      //     id: 'mapbox/streets-v11'
+      // })
+      var normalm = L.tileLayer.chinaProvider('GaoDe.Normal.Map', {
+        maxZoom: 18,
+        minZoom: 5
+      })
+      var tiles = L.layerGroup([normalm])
+      var latlng = L.latLng(39.9210922667, 116.3209316333)
+      var map = L.map('map', { center: latlng, zoom: 13, layers: [tiles] })
+
+      var markers = L.markerClusterGroup()
+
+      for (var i = 0; i < addressPoints.length; i++) {
+        var a = addressPoints[i]
+        var title = a[2]
+        var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title })
+        marker.bindPopup(title)
+        markers.addLayer(marker)
+      }
+
+      map.addLayer(markers)
+    </script>
+  </body>
+</html>
