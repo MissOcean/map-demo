@@ -12,6 +12,7 @@
       html,
       body,
       #map_canvas {
+        margin: 0;
         height: 100%;
         width: 100%;
       }
@@ -26,7 +27,7 @@
         left: 320px;
         min-width: 800px;
         min-height: 767px; */
-        border: 1px solid #ff0000;
+        /* border: 1px solid #ff0000; */
       }
 
       #panel {
@@ -46,7 +47,7 @@
   </head>
   <body onload="window.init()">
     <div id="map_canvas"></div>
-    <div id="panel">
+    <div style="display: none;" id="panel">
       <div>
         设置属性：
         <ul id="attributeList">
@@ -177,6 +178,7 @@
       </div>
       <hr />
     </div>
+    <script src="./t.js"></script>
     <script type="text/javascript">
       var markerIndex = 0
       var map
@@ -184,25 +186,11 @@
       function $(a) {
         return document.getElementById(a)
       }
-      var data = [
-        [39.959228, 116.367874],
-        [39.984486, 116.427612],
-        [39.988169, 116.279984],
-        [39.847558, 116.402893],
-        [39.941857, 116.383667],
-        [40.022882, 116.551208],
-        [39.819085, 116.581421],
-        [39.924482, 116.205826],
-        [39.75788, 116.162567],
-        [39.631606, 116.325989],
-        [39.797986, 116.415253],
-        [40.11799, 116.416626],
-        [40.271668, 116.638412],
-        [40.14319, 116.236038],
-        [39.928168, 116.515503],
-        [39.902362, 116.38916],
-        [39.935539, 116.377487]
-      ]
+
+      var data = addressPoints.map(item => {
+        let [lat, lng] = item
+        return [lat, lng]
+      })
       window.init = function() {
         var Map = qq.maps.Map
         var Marker = qq.maps.Marker
@@ -229,7 +217,7 @@
           }
         }
 
-        var latlng = new LatLng(39.91, 116.38)
+        var latlng = new LatLng(39.9210922667, 116.3209316333)
         var options = {
           zoom: 11,
           center: latlng,
