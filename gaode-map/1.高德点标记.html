@@ -107,7 +107,7 @@
         map = new AMap.Map('container', {
           resizeEnable: true,
           center: [116.397428, 39.90923],
-          zoom: 13,
+          zoom: 13
           // touchZoom: false
         })
 
@@ -116,7 +116,7 @@
         marker = new AMap.Marker({
           icon:
             '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
-          position: [116.406315, 39.908775],
+          position: [116.397428, 39.90923],
           offset: new AMap.Pixel(-13, -30)
         })
         marker.setMap(map)
@@ -126,7 +126,6 @@
           '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png'
         )
       }
-
       function updateContent() {
         if (!marker) {
           return
@@ -151,7 +150,6 @@
         marker.setContent(markerContent) //更新点标记内容
         marker.setPosition([116.391467, 39.927761]) //更新点标记位置
       }
-
       // 清除 marker
       function clearMarker() {
         if (marker) {

@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      body {
+        /* display: flex;
+        height: 200px; */
+      }
+      #canvas,
+      #canvas2 {
+        background: tan;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <canvas id="canvas2" width="300" height="300"></canvas>
+    <script src="./smooth.js"></script>
+    <script>
+      const canvas = document.getElementById('canvas')
+      const canvas2 = document.getElementById('canvas2')
+      const ctx = canvas.getContext('2d')
+      const ctx2 = canvas2.getContext('2d')
+      let points = [
+        { x: 100, y: 50 },
+        { x: 170, y: 100 },
+        { x: 120, y: 160 },
+        { x: 220, y: 180 },
+        { x: 70, y: 250 }
+      ]
+      /* origin lines */
+      ctx.beginPath()
+      ctx.strokeStyle = 'green'
+      points.forEach((point, i) => {
+        if (i === 0) ctx.moveTo(point.x, point.y)
+        else ctx.lineTo(point.x, point.y)
+      })
+      ctx.stroke()
+      ctx.closePath()
+
+      ctx2.beginPath()
+      ctx2.strokeStyle = 'green'
+      points.forEach((point, i) => {
+        if (i === 0) ctx2.moveTo(point.x, point.y)
+        else ctx2.lineTo(point.x, point.y)
+      })
+      ctx2.stroke()
+      ctx2.closePath()
+
+      /* canvas bezierCurveTo */
+      ctx.beginPath()
+      let bezierOptions = calcBezierOptions(points, 0.6)
+      ctx.strokeStyle = 'red'
+      bezierOptions.forEach(([start, c1, c2, end]) => {
+        ctx.moveTo(start.x, start.y)
+        ctx.bezierCurveTo(c1.x, c1.y, c2.x, c2.y, end.x, end.y)
+      })
+      ctx.stroke()
+      ctx.closePath()
+
+      /* samplingBezierPoints  */
+      console.time('t')
+      let smoothPoints = smooth(points, 0.6, 0.05)
+      console.timeEnd('t')
+      ctx2.beginPath()
+      ctx2.strokeStyle = 'black'
+      smoothPoints.forEach((point, i) => {
+        if (i === 0) ctx2.moveTo(point.x, point.y)
+        else ctx2.lineTo(point.x, point.y)
+      })
+      ctx2.stroke()
+      ctx2.closePath()
+    </script>
+  </body>
+</html>

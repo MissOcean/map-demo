@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>添加折线覆盖物</title>
+    <style type="text/css">
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      body,
+      button,
+      input,
+      select,
+      textarea {
+        font: 12px/16px Verdana, Helvetica, Arial, sans-serif;
+      }
+      #info {
+        width: 603px;
+        padding-top: 3px;
+        overflow: hidden;
+      }
+      .btn {
+        width: 142px;
+      }
+      #container {
+        min-width: 600px;
+        min-height: 767px;
+      }
+    </style>
+    <script
+      charset="utf-8"
+      src="https://map.qq.com/api/js?v=2.exp&key=WOYBZ-WMQL6-3BYSX-MQPYJ-72DKJ-F4BV4"
+    ></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="./smooth.js"></script>
+    <script src="./smooth2.js"></script>
+    <script>
+      function init() {
+        var center = new qq.maps.LatLng(39.916527, 116.397128)
+        var map = new qq.maps.Map(document.getElementById('container'), {
+          zoom: 13
+        })
+        // var points = [
+        //   [39.930456, 116.387554],
+        //   [39.929008, 116.414162],
+        //   [39.909786, 116.379314],
+        //   [39.908206, 116.416908],
+        //   [39.872786, 116.396908]
+        // ]
+        var points = [
+          [29.40019, 107.79157],
+          [29.43024, 107.80462],
+          [29.45688, 107.82445]
+        ]
+        var points = [
+          [29.40019, 107.79157],
+          [29.43024, 107.80462],
+          [29.45688, 107.82445],
+          [29.51567, 107.76468]
+        ]
+        var points3 = [
+          [29.40019, 107.79157],
+          [29.43024, 107.80462],
+          [29.45688, 107.82445],
+          [29.51567, 107.76468],
+          [29.22028, 107.90893],
+          [29.203325, 107.8811]
+        ]
+        map.setCenter(new qq.maps.LatLng(...points[0]))
+        var originPath = points.map(item => new qq.maps.LatLng(...item))
+
+        var markers = originPath.map(
+          position => new qq.maps.Marker({ position })
+        )
+        markers.forEach(marker => marker.setMap(map))
+
+        var smoothPoints = smooth(
+          points.map(item => ({ x: item[0], y: item[1] })),
+          0.6,
+          0.05,
+          false
+        )
+        var smoothPoints2 = smooth2(points)
+        var smoothPoints3 = smooth2(points, 0.1, 1)
+
+        console.log(points)
+        console.log(smoothPoints)
+        console.log(smoothPoints2)
+        var smoothPath = smoothPoints.map(
+          item => new qq.maps.LatLng(item.x, item.y)
+        )
+        var smoothPath2 = smoothPoints2.map(
+          item => new qq.maps.LatLng(item[0], item[1])
+        )
+        var smoothPath3 = smoothPoints3.map(
+          item => new qq.maps.LatLng(item[0], item[1])
+        )
+        console.log(smoothPath)
+        console.log(smoothPath2)
+        // var polyline = new qq.maps.Polyline({
+        //   path: originPath,
+        //   strokeColor: '#000000',
+        //   strokeWeight: 2,
+        //   editable: false,
+        //   map: map
+        // })
+        var smoothpolyline = new qq.maps.Polyline({
+          path: smoothPath,
+          strokeColor: 'red',
+          strokeWeight: 2,
+          editable: false,
+          map: map
+        })
+        var smoothpolyline2 = new qq.maps.Polyline({
+          path: smoothPath2,
+          strokeColor: '#ff0000',
+          strokeWeight: 2,
+          editable: false,
+          map: map
+        })
+        var smoothpolyline3 = new qq.maps.Polyline({
+          path: smoothPath3,
+          strokeColor: '#00ff00',
+          strokeWeight: 2,
+          editable: false,
+          map: map
+        })
+      }
+      init()
+    </script>
+  </body>
+</html>

@@ -63,8 +63,8 @@
         minZoom: 5
       })
       var tiles = L.layerGroup([normalm])
-
-      let newpos = coordtransform.gcj02towgs84(116.397428, 39.90923)
+      let newpos = [116.397428, 39.90923]
+      // newpos = coordtransform.gcj02towgs84(116.397428, 39.90923)
       console.log(newpos)
       let [lng, lat] = newpos
       var latlng = L.latLng(lat, lng)
@@ -98,8 +98,6 @@
       // var marker = L.marker([39.90923, 116.397428]).addTo(map)
 
       var marker = L.marker([lat, lng]).addTo(map)
-      var _marker = L.marker([39.90171369668312, 116.38473343566172]).addTo(map)
-      var marker2 = L.marker([39.908775, 116.406315]).addTo(map)
     </script>
   </body>
 </html>

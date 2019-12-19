@@ -1,0 +1,122 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css" />
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/better-scroll/dist/bscroll.min.js"></script>
+    <style>
+      body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url(./imgs/bg.jpg);
+        background-position: center;
+        background-size: 725px 1132px;
+        background-repeat: no-repeat;
+        height: 100%;
+        margin: 0;
+      }
+      #app{
+        width: 375px;
+        height: 667px;
+        transform: translate3d(-5px, -4px, 0px);
+        background: #fff;
+          display: flex;
+          flex-direction: column;
+      }
+      .swiper-container{
+        width: 375px;
+        height: 616.5px;
+      }
+      #tab1,#tab2{
+        position: absolute;
+        bottom: -3px;
+        height: 50.5px;
+        left: 0;
+        border-top: 1px solid rgba(220, 220, 220,.2);
+        right: 0;
+        background-repeat: no-repeat;
+        flex-grow: 1;
+        z-index: 9999;
+        background-size: contain;
+      }
+      #tab1{
+        background-image: url('./imgs/002002.png');
+      }
+      #tab2{
+        background-image: url('./imgs/002-2.png');
+        display: none;
+      }
+      .swiper-slide-1{
+        height: 100%;
+        overflow: hidden;
+      }
+      
+      .swiper-slide-2{
+        height: 100%;
+        overflow: hidden;
+      }
+      .swiper-slide-1-content,.swiper-slide-2-content{
+        min-height: 100%;
+        
+        background-image: url('./imgs/l3.jpg');
+        background-position:top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      .swiper-slide-1-content{
+        height: 932px;
+      }
+      .swiper-slide-2-content{
+        background-image: url('./imgs/003.png');
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide ">
+            <div class="swiper-slide-1 bs" >
+              <div class="swiper-slide-1-content"></div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="swiper-slide-2 bs" >
+              <div class="swiper-slide-2-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="tab1"></div>
+      <div id="tab2"></div>
+    </div>
+    <script>    
+      var $tabs = [ $('#tab1') , $('#tab2') ]  
+      var mySwiper = new Swiper ('.swiper-container', {
+        autoplay:true,
+        on:{
+          slideChange: function(){
+            let i = this.realIndex
+            console.log(i)
+            $tabs[i].show()
+            $tabs[i===0?1:0].hide()
+          }
+        },
+      })   
+      setTimeout(function(){
+        let eles = document.querySelectorAll('.bs')
+        Array.prototype.forEach.call(eles,function(el){
+          new BScroll(el)
+        })
+        console.log(eles)
+      },0)    
+      document
+      </script>
+    </body>
+  </body>
+</html>
