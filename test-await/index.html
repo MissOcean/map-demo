@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let genPromise = (value, time) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(value)
+          }, time)
+        })
+      }
+
+      async function serialRun(t1, t2, t3, t4) {
+        console.time('serialRun')
+        let A = await genPromise('A' + t1, t1)
+        console.log('serialRun', A)
+        let B = await genPromise('B' + t2, t2)
+        console.log('serialRun', B)
+        let C = await genPromise('C' + t3, t3)
+        console.log('serialRun', C)
+        let D = await genPromise('D' + t4, t4)
+        console.log('serialRun', D)
+        console.timeEnd('serialRun')
+      }
+      function parallelRun(t1, t2, t3, t4) {
+        console.time('parallelRun')
+        let all = [
+          genPromise('A' + t1, t1),
+          genPromise('B' + t2, t2),
+          genPromise('C' + t3, t3),
+          genPromise('D' + t4, t4)
+        ]
+        for (let i = 0; i < all.length; i++) {
+          let ps = all.slice(0, i + 1)
+          Promise.all(ps).then(res => {
+            console.log('parallelRun', res[res.length - 1])
+            if (i === all.length - 1) console.timeEnd('parallelRun')
+          })
+        }
+      }
+
+      function random() {
+        return parseInt(Math.random() * 20) * 25
+      }
+      let times = [random(), random(), random(), random()]
+      serialRun(...times)
+      parallelRun(...times)
+    </script>
+  </body>
+</html>

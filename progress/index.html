@@ -1,0 +1,46 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      canvas {
+        visibility: hidden;
+        background: #eee;
+        margin: auto;
+      }
+      img {
+        width: 36px;
+        height: 36px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <img src="" id="img" alt="" />
+    <script>
+      canvas.height = 36
+      canvas.width = 36
+      let center = 18
+      let ctx = canvas.getContext('2d')
+      ctx.beginPath()
+      ctx.arc(center, center, 14, 0, Math.PI * 2)
+      ctx.fillStyle = '#F8FAFF'
+      ctx.fill()
+      ctx.beginPath()
+      ctx.arc(
+        center,
+        center,
+        14,
+        1.5 * Math.PI,
+        1.5 * Math.PI + Math.PI * 2 * 0.33
+      )
+      ctx.lineJoin = 'round'
+      ctx.lineWidth = 2
+      ctx.strokeStyle = '#01E2B3'
+      ctx.stroke()
+      img.src = canvas.toDataURL()
+    </script>
+  </body>
+</html>

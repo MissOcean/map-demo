@@ -13,7 +13,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: url(./imgs/bg.jpg);
+        background-image: url('./imgs/bg.jpg');
         background-position: center;
         background-size: 725px 1132px;
         background-repeat: no-repeat;
@@ -25,8 +25,9 @@
         height: 667px;
         transform: translate3d(-5px, -4px, 0px);
         background: #fff;
-          display: flex;
-          flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        position: relative;
       }
       .swiper-container{
         width: 375px;
@@ -41,8 +42,8 @@
         right: 0;
         background-repeat: no-repeat;
         flex-grow: 1;
-        z-index: 9999;
-        background-size: contain;
+        z-index: 99;
+        background-size: 375px;
       }
       #tab1{
         background-image: url('./imgs/002002.png');
@@ -62,17 +63,44 @@
       }
       .swiper-slide-1-content,.swiper-slide-2-content{
         min-height: 100%;
-        
-        background-image: url('./imgs/l3.jpg');
+        background-image: url('./img2/001.png');
         background-position:top center;
         background-size: contain;
         background-repeat: no-repeat;
       }
       .swiper-slide-1-content{
         height: 932px;
+        padding-top: 386px;
       }
       .swiper-slide-2-content{
-        background-image: url('./imgs/003.png');
+        background-image: url('./img2/002.png');
+        padding-top: 386px;Z
+      }
+      .dd{
+       
+      }
+      .dd-content{
+        /* width: 467.5px; */
+        width: 483.5px;
+        height: 91px;
+        background-image: url('./img2/滚动.png');
+        background-position: 16px center;
+        background-size: 451px 91px;
+        background-repeat: no-repeat;
+      }
+      .dot{
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        left: 116px;
+        top: 426px;
+        background: red;
+        border-radius: 50%;
+        opacity: .8;
+        transition: all.5s;
+        z-index: 999;
+        background: red;
+        opacity: .5;
       }
     </style>
   </head>
@@ -80,9 +108,13 @@
     <div id="app">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide ">
+          <div class="swiper-slide swiper-no-swiping">
             <div class="swiper-slide-1 bs" >
-              <div class="swiper-slide-1-content"></div>
+              <div class="swiper-slide-1-content">
+                <div class="dd">
+                  <div class="dd-content"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="swiper-slide">
@@ -94,11 +126,12 @@
       </div>
       <div id="tab1"></div>
       <div id="tab2"></div>
+      <div class="dot"></div>
     </div>
     <script>    
       var $tabs = [ $('#tab1') , $('#tab2') ]  
       var mySwiper = new Swiper ('.swiper-container', {
-        autoplay:true,
+        speed:600,
         on:{
           slideChange: function(){
             let i = this.realIndex
@@ -106,16 +139,48 @@
             $tabs[i].show()
             $tabs[i===0?1:0].hide()
           }
-        },
+        }
       })   
+      var myBs
       setTimeout(function(){
-        let eles = document.querySelectorAll('.bs')
-        Array.prototype.forEach.call(eles,function(el){
-          new BScroll(el)
-        })
-        console.log(eles)
+        myBs = new BScroll('.dd',{scrollX:true})
       },0)    
-      document
+      function wait (time) {
+        return new Promise(resolve => setTimeout(resolve, time))
+      }
+      async function run(){
+        await wait(1000)
+        $(".dot").animate({ 
+           left: '206px',
+           easing:'linear'
+        })
+        await wait(1000)
+        myBs.scrollTo(myBs.maxScrollX,0,1000)
+        await wait(1000)
+        $(".dot").animate({ 
+           left: '116px',
+           easing:'linear'
+        })
+        await wait(1000)
+        myBs.scrollTo(0,0,1000)
+        await wait(1000)
+        $(".dot").animate({ 
+          left: '224px',
+          top: '634px',
+          easing:'linear'
+        })
+        await wait(1000)
+        mySwiper.slideNext()
+        await wait(1000)
+        $(".dot").animate({ 
+          left: '130px',
+          easing:'linear'
+        })
+        await wait(1000)
+        mySwiper.slidePrev()
+      }
+      run()
+      
       </script>
     </body>
   </body>
